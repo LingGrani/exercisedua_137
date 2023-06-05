@@ -1,20 +1,62 @@
-// exercisedua_137.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <vector>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+class Pengarang;
+
+class Penerbit {
+public:
+	string nama_Penerbit;
+	vector<Pengarang*> daftar_Pengarang;
+	void tambahPengarang(Pengarang*);
+	void cetakPengarang();
+};
+
+class Pengarang{
+public:
+	string nama_Pengarang;
+	Pengarang(string pPengarang);
+	vector<Penerbit*> daftar_Penerbit;
+	void tambahPenerbit(Penerbit*);
+	void cetakPenerbit();
+};
+
+class Buku: public Pengarang {
+public:
+	string nama_Buku;
+	void cetakPengarang();
+};
+
+void Penerbit::tambahPengarang(Pengarang* pPengarang) {
+	daftar_Pengarang.push_back(pPengarang);
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void Pengarang::tambahPenerbit(Penerbit* pPenerbit) {
+	daftar_Penerbit.push_back(pPenerbit);
+	pPenerbit->tambahPengarang(this);
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void Pengarang::cetakPenerbit() {
+	cout << "Daftar Penerbit yang diikuti" << "'"<< this->nama_Pengarang  <<"'" << endl;
+	for (auto& a : daftar_Penerbit)
+	{
+		cout << a->nama_Penerbit << endl;
+	}
+};
+
+void Penerbit::cetakPengarang() {
+	cout << "Daftar Pengarang pada Penerbit" << "'" << this->nama_Penerbit << "'" << endl;
+	for (auto& a : daftar_Pengarang)
+	{
+		cout << a->nama_Pengarang << endl;
+	}
+};
+
+void Buku::cetakPengarang() {
+	cout << "Daftar Buku yang Dikarang" << nama_Pengarang << endl;
+}
+
+int main() {
+	Penerbit* 1 = new Penerbit("Game Press")
+	return 0;
+};
